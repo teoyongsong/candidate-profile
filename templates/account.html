@@ -1,0 +1,240 @@
+{% extends "base.html" %}
+{% block title %}My profile · Candidate showcase{% endblock %}
+{% block content %}
+<main class="account-page account-page--wide">
+  <header class="account-header">
+    <h1 class="account-header__title">Your profile</h1>
+    <p class="account-header__meta">
+      Signed in as <strong>{{ profile.username }}</strong>
+    </p>
+    {% if welcome %}
+    <div class="callout callout--success" role="status">
+      <strong>Welcome!</strong> Your account is ready. Add proof points, experience, and a photo below — then check the
+      <a href="/">showcase</a> to see how you appear.
+    </div>
+    {% endif %}
+    {% if saved %}
+    <p class="form-success" role="status">Changes saved.</p>
+    {% endif %}
+    {% if error_message %}
+    <p class="form-error" role="alert">{{ error_message }}</p>
+    {% endif %}
+  </header>
+
+  <p class="account-intro">
+    Everything here appears on your public card. Use plain language — no code or JSON needed.
+  </p>
+
+  <form
+    class="form form--account"
+    method="post"
+    action="/account"
+    enctype="multipart/form-data"
+  >
+    <section class="form-section">
+      <h2 class="form-section__title">Photo</h2>
+      <p class="form-section__hint">A clear headshot helps people recognize you. Square images work best.</p>
+      {% if profile.photo %}
+      <div class="account-photo">
+        <img src="{{ profile.photo }}" alt="" width="140" height="140" class="account-photo__img" />
+      </div>
+      {% endif %}
+      <label class="form__label" for="photo">Upload or replace image</label>
+      <input
+        class="form__file"
+        id="photo"
+        name="photo"
+        type="file"
+        accept="image/jpeg,image/png,image/gif,image/webp"
+      />
+      <p class="form__microhint">JPEG, PNG, GIF, or WebP · up to 2 MB</p>
+      {% if profile.photo %}
+      <label class="form__check">
+        <input type="checkbox" name="remove_photo" value="1" />
+        Remove current photo
+      </label>
+      {% endif %}
+    </section>
+
+    <section class="form-section">
+      <h2 class="form-section__title">Self-introduction video</h2>
+      <p class="form-section__hint">
+        Record a short intro (1–2 minutes), then paste the share link. Employers can open it from your card.
+      </p>
+      <p class="form-section__links">
+        <a href="https://www.loom.com" target="_blank" rel="noopener noreferrer">Record with Loom</a>
+        <span class="form-section__links-sep">·</span>
+        <a href="https://www.youtube.com/upload" target="_blank" rel="noopener noreferrer">Upload to YouTube</a>
+        <span class="form-section__links-sep">·</span>
+        <a href="https://vimeo.com/upload" target="_blank" rel="noopener noreferrer">Upload to Vimeo</a>
+      </p>
+      <label class="form__label" for="self_intro_video_url">Video page URL <span class="optional">optional</span></label>
+      <input
+        class="form__input"
+        id="self_intro_video_url"
+        name="self_intro_video_url"
+        type="text"
+        inputmode="url"
+        autocomplete="off"
+        value="{{ self_intro_video_url }}"
+        placeholder="https://…"
+      />
+      <p class="form__microhint">Must start with https:// or http:// (link to your video page, not a file on your computer).</p>
+    </section>
+
+    <section class="form-section">
+      <h2 class="form-section__title">How you introduce yourself</h2>
+      <label class="form__label" for="name">Your name</label>
+      <input class="form__input" id="name" name="name" type="text" required value="{{ name }}" autocomplete="name" />
+
+      <label class="form__label" for="headline">Professional headline</label>
+      <input
+        class="form__input"
+        id="headline"
+        name="headline"
+        type="text"
+        required
+        value="{{ headline }}"
+        placeholder="Role · focus areas (e.g. Data Engineer · pipelines &amp; analytics)"
+      />
+      <p class="form__microhint">One line under your name on the showcase.</p>
+
+      <label class="form__label" for="usp">Your unique value (USP)</label>
+      <textarea class="form__textarea" id="usp" name="usp" rows="4" required placeholder="What do you deliver that others don’t? One or two sentences.">{{ usp }}</textarea>
+
+      <label class="form__label" for="usp_proof_points">Proof points <span class="optional">optional</span></label>
+      <textarea
+        class="form__textarea"
+        id="usp_proof_points"
+        name="usp_proof_points"
+        rows="5"
+        placeholder="One bullet per line: metrics, scope, outcomes that back up your USP."
+      >{{ usp_proof_text }}</textarea>
+    </section>
+
+    <section class="form-section">
+      <h2 class="form-section__title">Skills</h2>
+      <label class="form__label" for="skills">Skills &amp; tools</label>
+      <input
+        class="form__input"
+        id="skills"
+        name="skills"
+        type="text"
+        value="{{ skills_text }}"
+        placeholder="Python, SQL, AWS — separate with commas"
+      />
+    </section>
+
+    <section class="form-section">
+      <h2 class="form-section__title">Work experience</h2>
+      <p class="form-section__hint">
+        Add each role in its own block. Leave a block empty to skip. Put one achievement per line under “Highlights”.
+      </p>
+      {% for slot in experience_slots %}
+      <div class="job-block">
+        <div class="job-block__head">Role {{ loop.index }}</div>
+        <label class="form__label" for="exp_{{ loop.index0 }}_title">Job title</label>
+        <input
+          class="form__input"
+          id="exp_{{ loop.index0 }}_title"
+          name="exp_{{ loop.index0 }}_title"
+          type="text"
+          value="{{ slot.title }}"
+          placeholder="e.g. Senior Data Engineer"
+        />
+        <label class="form__label" for="exp_{{ loop.index0 }}_company">Company</label>
+        <input
+          class="form__input"
+          id="exp_{{ loop.index0 }}_company"
+          name="exp_{{ loop.index0 }}_company"
+          type="text"
+          value="{{ slot.company }}"
+        />
+        <label class="form__label" for="exp_{{ loop.index0 }}_period">Dates</label>
+        <input
+          class="form__input"
+          id="exp_{{ loop.index0 }}_period"
+          name="exp_{{ loop.index0 }}_period"
+          type="text"
+          value="{{ slot.period }}"
+          placeholder="e.g. 2022 — present"
+        />
+        <label class="form__label" for="exp_{{ loop.index0 }}_highlights">Highlights</label>
+        <textarea
+          class="form__textarea"
+          id="exp_{{ loop.index0 }}_highlights"
+          name="exp_{{ loop.index0 }}_highlights"
+          rows="3"
+          placeholder="One bullet per line"
+        >{{ slot.highlights }}</textarea>
+      </div>
+      {% endfor %}
+    </section>
+
+    <section class="form-section">
+      <h2 class="form-section__title">Education</h2>
+      <label class="form__label" for="education">Schools &amp; degrees</label>
+      <textarea
+        class="form__textarea"
+        id="education"
+        name="education"
+        rows="4"
+        placeholder="One line per degree or certificate"
+      >{{ education_text }}</textarea>
+    </section>
+
+    <section class="form-section">
+      <h2 class="form-section__title">Links</h2>
+      <p class="form-section__hint">Label each link (e.g. GitHub, LinkedIn) and paste the full URL including https://</p>
+      {% for link in link_slots %}
+      <div class="link-pair">
+        <div class="link-pair__fields">
+          <label class="sr-only" for="link_{{ loop.index0 }}_label">Link label {{ loop.index }}</label>
+          <input
+            class="form__input"
+            id="link_{{ loop.index0 }}_label"
+            name="link_{{ loop.index0 }}_label"
+            type="text"
+            value="{{ link.label }}"
+            placeholder="Label (e.g. LinkedIn)"
+          />
+          <label class="sr-only" for="link_{{ loop.index0 }}_url">URL {{ loop.index }}</label>
+          <input
+            class="form__input"
+            id="link_{{ loop.index0 }}_url"
+            name="link_{{ loop.index0 }}_url"
+            type="text"
+            value="{{ link.url }}"
+            placeholder="https://…"
+          />
+        </div>
+      </div>
+      {% endfor %}
+    </section>
+
+    <section class="form-section">
+      <h2 class="form-section__title">Password</h2>
+      <p class="form-section__hint">Only fill this in if you want to change your password.</p>
+      <label class="form__label" for="current_password">Current password</label>
+      <input
+        class="form__input"
+        id="current_password"
+        name="current_password"
+        type="password"
+        autocomplete="current-password"
+      />
+      <label class="form__label" for="new_password">New password</label>
+      <input
+        class="form__input"
+        id="new_password"
+        name="new_password"
+        type="password"
+        autocomplete="new-password"
+        minlength="8"
+      />
+    </section>
+
+    <button class="form__submit form__submit--large" type="submit">Save profile</button>
+  </form>
+</main>
+{% endblock %}

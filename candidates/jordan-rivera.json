@@ -1,0 +1,35 @@
+{
+  "name": "Jordan Rivera",
+  "headline": "Backend Engineer · APIs, reliability, and clear ownership",
+  "usp": "I own services from design to on-call: clear APIs, measurable SLOs, and runbooks that mean incidents get shorter every time.",
+  "usp_proof_points": [
+    "Led migration of monolith checkout slice to Go microservice; p99 −40%",
+    "Introduced feature flags + gradual rollout for risky releases",
+    "On-call primary for payments; MTTR down from hours to <30 min"
+  ],
+  "skills": [
+    "Go",
+    "Python",
+    "PostgreSQL",
+    "Kubernetes",
+    "gRPC",
+    "Observability (Prometheus/Grafana)"
+  ],
+  "experience": [
+    {
+      "title": "Staff Backend Engineer",
+      "company": "Payments Platform Inc.",
+      "period": "2021 — present",
+      "highlights": [
+        "Designed idempotent payment APIs used by 3 product teams",
+        "Championed SLO-based alerting and error-budget reviews"
+      ]
+    }
+  ],
+  "education": ["M.Eng. Software Systems — Example Institute"],
+  "links": {
+    "GitHub": "https://github.com/example-jordan",
+    "LinkedIn": "https://linkedin.com/in/example-jordan"
+  },
+  "extras": {}
+}

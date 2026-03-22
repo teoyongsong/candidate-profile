@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{% block title %}Candidate showcase{% endblock %}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,600;0,9..40,700;1,9..40,400&family=Instrument+Serif:ital@0;1&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/static/css/style.css" />
+    {% block head_extra %}{% endblock %}
+  </head>
+  <body>
+    <div class="demo-banner" role="region" aria-label="Demo disclaimer">
+      <p class="demo-banner__text">
+        <strong>Demo only.</strong> This app is for learning and demonstration. Do not use it for production or
+        sensitive personal data. No warranty; use at your own risk.
+      </p>
+    </div>
+    <div class="bg-grid" aria-hidden="true"></div>
+    <nav class="top-nav">
+      <a class="top-nav__brand" href="/">Candidate showcase</a>
+      <div class="top-nav__links">
+        <a href="/">Home</a>
+        {% if request.session.get("username") %}
+        <a href="/account">My profile</a>
+        <a href="/logout">Log out</a>
+        {% else %}
+        <a href="/login">Log in</a>
+        <a href="/register" class="top-nav__cta">Register</a>
+        {% endif %}
+      </div>
+    </nav>
+    {% block content %}{% endblock %}
+  </body>
+</html>

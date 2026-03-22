@@ -1,0 +1,146 @@
+{% extends "base.html" %}
+{% block title %}Register · Candidate showcase{% endblock %}
+{% block content %}
+<main class="auth-page auth-page--register">
+  <div class="auth-card auth-card--wide">
+    <div class="register-hero">
+      <h1 class="auth-card__title">Create your candidate profile</h1>
+      <p class="auth-card__lede">
+        You’ll get a username and password to sign in anytime. We only ask for the essentials now — you can add experience,
+        links, and a photo after you register.
+      </p>
+    </div>
+
+    {% if error_message %}
+    <p class="form-error" role="alert">{{ error_message }}</p>
+    {% endif %}
+
+    <ol class="register-steps" aria-label="Steps">
+      <li class="register-steps__item register-steps__item--active">
+        <span class="register-steps__num">1</span>
+        <span class="register-steps__text">Account</span>
+      </li>
+      <li class="register-steps__item">
+        <span class="register-steps__num">2</span>
+        <span class="register-steps__text">Details</span>
+      </li>
+      <li class="register-steps__item">
+        <span class="register-steps__num">3</span>
+        <span class="register-steps__text">Finish</span>
+      </li>
+    </ol>
+
+    <form class="form form--register" method="post" action="/register" autocomplete="on">
+      <fieldset class="form-fieldset">
+        <legend class="form-fieldset__legend">Step 1 · Account</legend>
+        <p class="form-fieldset__hint">Choose a login you’ll remember. Only lowercase letters, numbers, and underscores.</p>
+
+        <label class="form__label" for="username">Username</label>
+        <input
+          class="form__input"
+          id="username"
+          name="username"
+          type="text"
+          required
+          autocomplete="username"
+          pattern="[a-z0-9_]{3,32}"
+          title="3–32 characters: lowercase letters, digits, underscore"
+          placeholder="e.g. jordan_rivera"
+        />
+
+        <label class="form__label" for="password">Password</label>
+        <input
+          class="form__input"
+          id="password"
+          name="password"
+          type="password"
+          required
+          minlength="8"
+          autocomplete="new-password"
+          placeholder="At least 8 characters"
+        />
+        <p class="form__microhint">Use a unique password you don’t reuse elsewhere.</p>
+
+        <label class="form__label" for="password_confirm">Confirm password</label>
+        <input
+          class="form__input"
+          id="password_confirm"
+          name="password_confirm"
+          type="password"
+          required
+          minlength="8"
+          autocomplete="new-password"
+        />
+      </fieldset>
+
+      <fieldset class="form-fieldset">
+        <legend class="form-fieldset__legend">Step 2 · How you show up</legend>
+        <p class="form-fieldset__hint">This is what visitors see first on your card.</p>
+
+        <label class="form__label" for="name">Your name</label>
+        <input class="form__input" id="name" name="name" type="text" required autocomplete="name" placeholder="Full name" />
+
+        <label class="form__label" for="headline">Professional headline</label>
+        <input
+          class="form__input"
+          id="headline"
+          name="headline"
+          type="text"
+          required
+          placeholder="e.g. Backend Engineer · APIs &amp; reliability"
+        />
+
+        <label class="form__label" for="usp">What makes you stand out? (USP)</label>
+        <textarea
+          class="form__textarea"
+          id="usp"
+          name="usp"
+          rows="5"
+          required
+          placeholder="In one or two sentences: what outcome or strength do you bring that employers care about?"
+        ></textarea>
+        <details class="form-details">
+          <summary>Examples you can adapt</summary>
+          <ul class="form-details__list">
+            <li>“I turn messy data into dashboards teams actually use — with tested pipelines and clear ownership.”</li>
+            <li>“I ship reliable services end-to-end: APIs, SLOs, and shorter incidents every release.”</li>
+          </ul>
+        </details>
+
+        <label class="form__label" for="self_intro_video_url">Self-introduction video <span class="optional">optional</span></label>
+        <p class="form-fieldset__hint form-fieldset__hint--tight">
+          <a href="https://www.loom.com" target="_blank" rel="noopener noreferrer">Record with Loom</a>,
+          <a href="https://www.youtube.com/upload" target="_blank" rel="noopener noreferrer">YouTube</a>, or
+          <a href="https://vimeo.com/upload" target="_blank" rel="noopener noreferrer">Vimeo</a>
+          — then paste the public link.
+        </p>
+        <input
+          class="form__input"
+          id="self_intro_video_url"
+          name="self_intro_video_url"
+          type="text"
+          inputmode="url"
+          autocomplete="off"
+          placeholder="https://…"
+        />
+
+        <label class="form__label" for="skills">Skills <span class="optional">optional</span></label>
+        <input
+          class="form__input"
+          id="skills"
+          name="skills"
+          type="text"
+          placeholder="Python, SQL, Kubernetes — comma separated"
+        />
+        <p class="form__microhint">You can add or edit skills later in your profile.</p>
+      </fieldset>
+
+      <button class="form__submit form__submit--large" type="submit">Create profile &amp; continue</button>
+    </form>
+
+    <p class="auth-card__footer">
+      Already have an account? <a href="/login">Log in</a>
+    </p>
+  </div>
+</main>
+{% endblock %}

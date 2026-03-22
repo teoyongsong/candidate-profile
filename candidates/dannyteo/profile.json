@@ -1,0 +1,56 @@
+{
+  "name": "Teo Yong Song",
+  "headline": "Software Developer | Data Engineer | CISSP",
+  "usp": "Data Enthusiast. Willing to keep learning to be at the forefront of the latest technology.",
+  "usp_proof_points": [
+    "CISSP",
+    "CEH"
+  ],
+  "skills": [
+    "Java",
+    "React",
+    "Python",
+    "SQL",
+    "Pandas",
+    "Data Science"
+  ],
+  "experience": [
+    {
+      "title": "Cloud Infrastructure Engineer",
+      "company": "",
+      "period": "Dec 2022 - May 2024",
+      "highlights": [
+        "T&O-GIC Public Cloud Engineer",
+        "Setting up AWS in Indonesia",
+        "Python/YAML/Git/Bitbucket",
+        "Cloudformation",
+        "Lambda",
+        "Prisma Cloud",
+        "AWS Control Tower",
+        "AWS Networking",
+        "Compliance Controls for AWS",
+        "Disaster Recovery: Backup/Recovery of AWS Service Packages (RDS: PostgreSQL, MySQL, MariaDB)",
+        "User Documentation",
+        "AWS Appstream 2.0",
+        "Webhook Auto-testing of code",
+        "SQS/SNS",
+        "IAM",
+        "T&O-GIC Public Cloud Engineer Setting up AWS in Indonesia Python/YAML/Git/Bitbucket Cloudformation Lambda Prisma Cloud AWS Control Tower AWS Networking Compliance Controls for AWS Disaster Recovery: Backup/Recovery of AWS Service Packages (RDS: PostgreSQL, MySQL, MariaDB) User Documentation AWS Appstream 2.0 Webhook Auto-testing of code SQS/SNS IAM",
+        "Skills: Problem Solving · YAML · Git · JSON · Technical Documentation · Engineering Disciplines · Bitbucket · Cloud Operations · Python (Programming Language)"
+      ]
+    }
+  ],
+  "education": [
+    "B. Eng. (Elect.) NTU",
+    "Specialist Diploma in Cloud Security, Ngee Ann Polytechnic",
+    "Professional Certificate in Cloud Computing"
+  ],
+  "links": {
+    "LinkedIn": "https://www.linkedin.com/in/teoyongsong/",
+    "Github": "https://github.com/teoyongsong"
+  },
+  "extras": {},
+  "username": "dannyteo",
+  "password_hash": "$2b$12$pELluXd4Zgs23ZDjDaPE.uEt8b5LcdybF0gQE2aPe5uU9cBQpDxom",
+  "photo": "/static/uploads/dannyteo.jpg"
+}

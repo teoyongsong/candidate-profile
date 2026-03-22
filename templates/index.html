@@ -1,0 +1,195 @@
+{% extends "base.html" %}
+{% block content %}
+<header class="site-header">
+  <div class="site-header__inner">
+    <h1 class="site-title">Tech Candidate showcase</h1>
+    <p class="site-lede">
+      For employers: search by skills, tools, domain, or company — all visible fields are included.
+    </p>
+    {% if shuffle_note %}
+    <p class="site-lede site-lede--muted">
+      Order is randomized on each load so every candidate gets equal visibility at the top.
+    </p>
+    {% endif %}
+
+    <form class="search-bar" method="get" action="/" role="search" aria-label="Filter candidates">
+      <label class="search-bar__label" for="candidate-search">Search profiles</label>
+      <div class="search-bar__row">
+        <input
+          class="search-bar__input"
+          type="search"
+          name="q"
+          id="candidate-search"
+          value="{{ search_query }}"
+          placeholder="e.g. Python Spark AWS or backend payments"
+          autocomplete="off"
+        />
+        <button class="search-bar__btn" type="submit">Search</button>
+        {% if is_search %}
+        <a class="search-bar__clear" href="/">Clear</a>
+        {% endif %}
+      </div>
+      <p class="search-bar__hint">
+        Separate words narrow results: each term must appear somewhere in the profile (name, headline, USP, skills,
+        experience, education, links).
+      </p>
+      {% if is_search or total_count > 0 %}
+      <p class="search-bar__meta" role="status">
+        {% if is_search %}
+        Showing <strong>{{ filtered_count }}</strong> of <strong>{{ total_count }}</strong> candidates
+        {% if search_query %}for “{{ search_query }}”{% endif %}
+        {% else %}
+        <strong>{{ total_count }}</strong> candidate{% if total_count != 1 %}s{% endif %} in the pool
+        {% endif %}
+      </p>
+      {% endif %}
+    </form>
+  </div>
+</header>
+
+<main class="card-grid">
+  {% if is_search and filtered_count == 0 %}
+  <div class="empty-results" role="status">
+    <p class="empty-results__title">No matching candidates</p>
+    <p class="empty-results__text">
+      No profile contains all of those terms. Try fewer or broader keywords, or
+      <a href="/">browse everyone</a>.
+    </p>
+  </div>
+  {% endif %}
+  {% for c in candidates %}
+  <article
+    class="card card--accent-{{ loop.index0 % 5 }}"
+    data-candidate="{{ c.name | e }}"
+  >
+    <header class="card__header card__header--with-photo">
+      {% if c.photo %}
+      <img
+        class="card__photo"
+        src="{{ c.photo }}"
+        alt=""
+        width="96"
+        height="96"
+        loading="lazy"
+      />
+      {% endif %}
+      <div class="card__header-text">
+        <h2 class="card__name">{{ c.name }}</h2>
+        <p class="card__headline">{{ c.headline }}</p>
+      </div>
+    </header>
+
+    <div class="card__scroll">
+    {% if c.self_intro_video_url %}
+    <div class="intro-video">
+      <a
+        class="intro-video__btn"
+        href="{{ c.self_intro_video_url | e }}"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        Watch self-introduction
+      </a>
+      <p class="intro-video__hint">Opens your video in a new tab</p>
+    </div>
+    {% endif %}
+    <section class="usp" aria-labelledby="usp-title-{{ loop.index }}">
+      <div class="usp__label">
+        <span id="usp-title-{{ loop.index }}" class="usp__title">Unique value</span>
+        <span class="usp__subtitle">USP &amp; proof</span>
+      </div>
+      <p class="usp__lead">{{ c.usp }}</p>
+      {% if c.usp_proof_points %}
+      <ul class="usp__list">
+        {% for point in c.usp_proof_points %}
+        <li>{{ point }}</li>
+        {% endfor %}
+      </ul>
+      {% endif %}
+    </section>
+
+    {% if c.skills %}
+    <section class="section" aria-labelledby="skills-{{ loop.index }}">
+      <h3 id="skills-{{ loop.index }}" class="section__title">Skills</h3>
+      <ul class="skill-pills">
+        {% for s in c.skills %}
+        <li>{{ s }}</li>
+        {% endfor %}
+      </ul>
+    </section>
+    {% endif %}
+
+    {% if c.experience %}
+    <section class="section" aria-labelledby="exp-{{ loop.index }}">
+      <h3 id="exp-{{ loop.index }}" class="section__title">Experience</h3>
+      <div class="timeline">
+        {% for job in c.experience %}
+        <div class="timeline__item">
+          <div class="timeline__meta">
+            <span class="timeline__title">{{ job.title }}</span>
+            <span class="timeline__company">{{ job.company }}</span>
+            <span class="timeline__period">{{ job.period }}</span>
+          </div>
+          {% if job.highlights %}
+          <ul class="timeline__highlights">
+            {% for h in job.highlights %}
+            <li>{{ h }}</li>
+            {% endfor %}
+          </ul>
+          {% endif %}
+        </div>
+        {% endfor %}
+      </div>
+    </section>
+    {% endif %}
+
+    {% if c.education %}
+    <section class="section" aria-labelledby="edu-{{ loop.index }}">
+      <h3 id="edu-{{ loop.index }}" class="section__title">Education</h3>
+      <ul class="plain-list">
+        {% for line in c.education %}
+        <li>{{ line }}</li>
+        {% endfor %}
+      </ul>
+    </section>
+    {% endif %}
+
+    {% if c.links %}
+    <section class="section section--links" aria-labelledby="links-{{ loop.index }}">
+      <h3 id="links-{{ loop.index }}" class="section__title">Links</h3>
+      <dl class="links">
+        {% for label, url in c.links.items() %}
+        <div class="links__row">
+          <dt>{{ label }}</dt>
+          <dd>
+            <a href="{{ url | e }}" target="_blank" rel="noopener noreferrer">{{
+              url
+            }}</a>
+          </dd>
+        </div>
+        {% endfor %}
+      </dl>
+    </section>
+    {% endif %}
+
+    {% for section_name, lines in (c.extras or {}).items() %}
+    <section class="section">
+      <h3 class="section__title">{{ section_name }}</h3>
+      <ul class="plain-list">
+        {% for line in lines %}
+        <li>{{ line }}</li>
+        {% endfor %}
+      </ul>
+    </section>
+    {% endfor %}
+    </div>
+  </article>
+  {% endfor %}
+</main>
+
+<footer class="site-footer">
+  <p>
+    Register to add your profile · add files under <code>candidates/</code> or use the web form
+  </p>
+</footer>
+{% endblock %}

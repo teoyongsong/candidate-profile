@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block title %}Log in · Candidate showcase{% endblock %}
+{% block content %}
+<main class="auth-page">
+  <div class="auth-card">
+    <h1 class="auth-card__title">Log in</h1>
+    <p class="auth-card__lede">
+      Enter the same username and password you used when you created your profile.
+    </p>
+    {% if error_message %}
+    <p class="form-error" role="alert">{{ error_message }}</p>
+    {% endif %}
+    <form class="form" method="post" action="/login" autocomplete="on">
+      <label class="form__label" for="username">Username</label>
+      <input
+        class="form__input"
+        id="username"
+        name="username"
+        type="text"
+        required
+        autocomplete="username"
+        pattern="[a-z0-9_]{3,32}"
+        title="3–32 characters: lowercase letters, digits, underscore"
+        placeholder="your_username"
+      />
+      <label class="form__label" for="password">Password</label>
+      <input
+        class="form__input"
+        id="password"
+        name="password"
+        type="password"
+        required
+        autocomplete="current-password"
+      />
+      <button class="form__submit" type="submit">Log in</button>
+    </form>
+    <p class="auth-card__footer">
+      No account? <a href="/register">Register</a>
+    </p>
+  </div>
+</main>
+{% endblock %}

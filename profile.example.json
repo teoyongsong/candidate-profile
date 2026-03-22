@@ -1,0 +1,68 @@
+{
+  "candidates": [
+    {
+      "name": "Alex Chen",
+      "headline": "Data Engineer · Analytics & ML-ready pipelines",
+      "usp": "I ship reliable, observable data products that turn messy business questions into dashboards and models teams actually use — not shelf-ware.",
+      "usp_proof_points": [
+        "Cut pipeline incident time by 60% with idempotent jobs, tests, and alerting",
+        "Owned end-to-end: ingestion → warehouse → dbt → BI for a 40-person org",
+        "Comfortable across SQL, Python, Spark, and cloud (AWS/GCP basics)"
+      ],
+      "skills": [
+        "Python",
+        "SQL",
+        "dbt",
+        "Airflow / Dagster",
+        "Spark",
+        "BigQuery / Snowflake",
+        "AWS & GCP"
+      ],
+      "experience": [
+        {
+          "title": "Senior Data Engineer",
+          "company": "Example Analytics Co.",
+          "period": "2022 — present",
+          "highlights": [
+            "Designed batch + near-real-time pipelines for product and finance KPIs",
+            "Mentored two juniors on testing and CI for data repos"
+          ]
+        }
+      ],
+      "education": ["B.Sc. Computer Science — Example University"],
+      "links": {
+        "GitHub": "https://github.com/example",
+        "LinkedIn": "https://linkedin.com/in/example"
+      },
+      "extras": {}
+    },
+    {
+      "name": "Jordan Rivera",
+      "headline": "Backend Engineer · APIs, reliability, and clear ownership",
+      "usp": "I own services from design to on-call: clear APIs, measurable SLOs, and runbooks that mean incidents get shorter every time.",
+      "usp_proof_points": [
+        "Led migration of monolith checkout slice to Go microservice; p99 −40%",
+        "Introduced feature flags + gradual rollout for risky releases",
+        "On-call primary for payments; MTTR down from hours to <30 min"
+      ],
+      "skills": ["Go", "Python", "PostgreSQL", "Kubernetes", "gRPC", "Observability (Prometheus/Grafana)"],
+      "experience": [
+        {
+          "title": "Staff Backend Engineer",
+          "company": "Payments Platform Inc.",
+          "period": "2021 — present",
+          "highlights": [
+            "Designed idempotent payment APIs used by 3 product teams",
+            "Championed SLO-based alerting and error-budget reviews"
+          ]
+        }
+      ],
+      "education": ["M.Eng. Software Systems — Example Institute"],
+      "links": {
+        "GitHub": "https://github.com/example-jordan",
+        "LinkedIn": "https://linkedin.com/in/example-jordan"
+      },
+      "extras": {}
+    }
+  ]
+}
