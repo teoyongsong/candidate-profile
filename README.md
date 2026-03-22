@@ -36,6 +36,24 @@ Open `http://127.0.0.1:8000/` in your browser.
 
 Set a strong random **`SECRET_KEY`** in the environment for any shared or production deployment. The app uses signed cookies for sessions.
 
+## Run the Streamlit app
+
+Same data and bcrypt logic as FastAPI, with a Streamlit UI (sidebar navigation: Showcase, Login, Register, My profile).
+
+```bash
+streamlit run streamlit_app.py
+```
+
+Opens in your browser (default `http://localhost:8501`).
+
+### Deploy on Streamlit Community Cloud
+
+1. Push this repository to GitHub.
+2. In [Streamlit Community Cloud](https://streamlit.io/cloud), create an app: pick the repo, branch, and **Main file path:** `streamlit_app.py`.
+3. **Important:** Cloud runtimes use an **ephemeral filesystem**. Files written under `candidates/` or `static/uploads/` during a session **may not persist** across restarts or redeploys. For a real deployment, store profiles in a database or object storage, or treat Cloud only as a **read-only demo** with candidates committed in the repo (no secrets in git).
+
+Optional environment variables (same meaning as above): `CANDIDATES_DIR`, `AGGREGATE_JSON`, `DEMO_MODE`, `NO_SHUFFLE`. You can set secrets in the Cloud app settings if needed.
+
 ## Run the terminal showcase
 
 ```bash
@@ -75,6 +93,7 @@ Optional fields include `photo` (URL path served under `/static/uploads/…` whe
 | Path | Role |
 |------|------|
 | `app.py` | FastAPI app: routes, sessions, search, uploads. |
+| `streamlit_app.py` | Streamlit UI (showcase, auth, profile edit). |
 | `profile.py` | Dataclasses, JSON load/save helpers. |
 | `profile_form.py` | Parses structured account form fields. |
 | `profile_search.py` | Keyword filter for employers. |
